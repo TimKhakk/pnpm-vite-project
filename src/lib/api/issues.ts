@@ -1,3 +1,5 @@
+import { WorkflowStateNode } from "@/lib/api/workflowStates";
+
 export type IssueNode = {
   id: string;
   title: string;
@@ -34,16 +36,16 @@ export const ISSUES_QUERY = `
   }
 `
 
-export const ISSUES_GRAPHQL_QUERY = {
+export const getIssuesGraphqlQuery = (workflowStateId: WorkflowStateNode['id']) => ({
   "query": ISSUES_QUERY,
   "variables": {
     "filter": {
       "state": {
         "id": {
-          "eq": "2b4011f4-3e12-4c32-9fa8-c6e1445a50c7"
+          "eq": workflowStateId,
         }
       }
     }
   },
   "operationName": "Issues"
-}
+})
