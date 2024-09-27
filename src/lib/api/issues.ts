@@ -2,7 +2,9 @@ import { WorkflowStateNode } from "@/lib/api/workflowStates";
 
 export type IssueNode = {
   id: string;
+  url: string;
   title: string;
+  identifier: string;
   team: {
     name: string;
   }
@@ -22,6 +24,8 @@ export const ISSUES_QUERY = `
       nodes {
         id
         title
+        identifier
+        url
         team {
           name
         }
