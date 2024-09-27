@@ -15,7 +15,7 @@ export function SelectScrollable({
   ...selectProps
 }: {
   groups: [WorkflowStateNode['team']['name'], WorkflowStateNode[]][]
-} & Pick<SelectProps, 'onValueChange' | 'value'>) {
+} & Pick<SelectProps, 'onValueChange' | 'value' | 'disabled'>) {
   return (
     <Select {...selectProps}>
       <SelectTrigger className="w-[280px]">
