@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { SelectScrollable } from "@/components/ui/selectScrollable"
 import { toast } from "@/hooks/use-toast"
@@ -5,12 +6,14 @@ import { api } from "@/lib/api/connect"
 import { getIssuesGraphqlQuery, type IssueNode, type IssuesDataResponse } from "@/lib/api/issues"
 import { WORKFLOW_STATES_GRAPHQL_QUERY, type WorkflowStateDataResponse, type WorkflowStateNode } from "@/lib/api/workflowStates"
 import { LINEAR_TOKEN_API_KEY } from "@/linear-token-api-form/config"
+import { useLinearTokenApiLocalStorage } from "@/linear-token-api-form/hooks"
 import type { CheckedState } from "@radix-ui/react-checkbox"
 import { groupBy, startCase } from "lodash-es"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useBoolean } from "usehooks-ts"
 
 const ReleaseNotesBuilder = () => {
+  const { removeValue } = useLinearTokenApiLocalStorage()
   const [workflowStates, setWorkflowStates] = useState<WorkflowStateNode[]>([])
   const [workflowStateId, setWorkflowStateId] = useState<WorkflowStateNode['id']>()
   const [issues, setIssues] = useState<IssueNode[]>([])
@@ -129,9 +132,12 @@ const ReleaseNotesBuilder = () => {
 
   return (
     <>
-      <SelectScrollable disabled={isError} value={workflowStateId} onValueChange={(v) => {
-        setWorkflowStateId(v)
-      }} groups={groupedByTeamName} />
+      <div className="flex items-center justify-between gap-4">
+        <SelectScrollable disabled={isError} value={workflowStateId} onValueChange={(v) => {
+          setWorkflowStateId(v)
+        }} groups={groupedByTeamName} />
+        <Button className='w-max' onClick={removeValue} variant="destructive">Reset {startCase(LINEAR_TOKEN_API_KEY)}</Button>
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-5 ">
           <div className="flex flex-col gap-5 max-h-[calc(100vh_-_100px)] overflow-auto">

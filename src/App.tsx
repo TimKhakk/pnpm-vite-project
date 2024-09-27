@@ -12,7 +12,7 @@ import type { z } from 'zod';
 import './App.css';
 
 function App() {
-  const { value, setValue, removeValue } = useLinearTokenApiLocalStorage()
+  const { value, setValue } = useLinearTokenApiLocalStorage()
 
   // move to useLinearTokenApiForm
   const form = useZodForm(linearTokenApiSchema, {
@@ -47,10 +47,7 @@ function App() {
           </FormProvider>
         </>
       ) : (
-        <>
-          <Button className='w-max' onClick={removeValue} variant="destructive">Reset {startCase(LINEAR_TOKEN_API_KEY)}</Button>
-          <ReleaseNotesBuilder />
-        </>
+        <ReleaseNotesBuilder />
       )}
     </main>
   )
