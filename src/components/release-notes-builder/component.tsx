@@ -79,13 +79,18 @@ const ReleaseNotesBuilder = () => {
 
 
   const groupedIssuesByProjectName = useMemo(() => {
-    return Object.entries(groupBy(issues, (i) => i.project?.name ?? 'Projectless')) as [IssueNode['team']['name'], IssueNode[]][]
+    const entries = Object.entries(groupBy(issues, (i) => i.project?.name ?? 'Projectless')) as [IssueNode['team']['name'], IssueNode[]][];
+    return entries.sort(([a]) => a === 'Projectless' ? -1 : 1)
   }, [issues])
 
   const groupedIssuesByProjectNameForPreview = useMemo(() => {
     const flatIssues = [...issuesPreview].map(([_, i]) => i);
+    const entries = Object.entries(groupBy(flatIssues, (i) => {
+      if (i.project?.name.startsWith('Side')) return 'Projectless'
+      return i.project?.name ?? 'Projectless'
+    })) as [IssueNode['team']['name'], IssueNode[]][]
 
-    return Object.entries(groupBy(flatIssues, (i) => i.project?.name ?? 'Projectless')) as [IssueNode['team']['name'], IssueNode[]][]
+    return entries
   }, [issuesPreview])
 
   const handleProjectCheck = (checked: CheckedState, issues: IssueNode[]) => {

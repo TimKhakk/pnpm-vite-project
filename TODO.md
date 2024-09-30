@@ -1,3 +1,3 @@
 # TODO
 
-[] Sort "Projectless" issues to the top
+[x] Sort "Projectless" issues to the top
