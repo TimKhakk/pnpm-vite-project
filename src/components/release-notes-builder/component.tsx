@@ -86,7 +86,6 @@ const ReleaseNotesBuilder = () => {
   const groupedIssuesByProjectNameForPreview = useMemo(() => {
     const flatIssues = [...issuesPreview].map(([_, i]) => i);
     const entries = Object.entries(groupBy(flatIssues, (i) => {
-      if (i.project?.name.startsWith('Side')) return 'Projectless'
       return i.project?.name ?? 'Projectless'
     })) as [IssueNode['team']['name'], IssueNode[]][]
 
